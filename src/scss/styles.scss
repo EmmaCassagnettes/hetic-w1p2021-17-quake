@@ -1,3 +1,10 @@
 @import 'vendors/reset';
 
 @import 'global/layout';
+
+@import 'blocs/end.scss';
+@import 'blocs/game.scss';
+@import 'blocs/home.scss';
+@import 'blocs/win.scss';
+
+@import 'config/fonts.scss';

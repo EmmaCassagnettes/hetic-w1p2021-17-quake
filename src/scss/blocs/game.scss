@@ -1,0 +1,35 @@
+.hero {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: indianred;
+  border-radius: 30px;
+}
+
+.tree {
+  width: 10px;
+  height: 80px;
+  background: green;
+  position: absolute;
+  top: 10vh;
+  left: 20vw;
+}
+
+.badboy {
+  width: 60px;
+  height: 60px;
+  background-color: black;
+  position: absolute;
+  right: 50vw;
+  border-radius: 20px;
+}
+
+.lives {
+  display: flex;
+  justify-content: center ;
+  font-family: monospace;
+  font-size: 32px;
+  color: red;
+}

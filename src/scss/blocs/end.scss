@@ -1,0 +1,47 @@
+.lose__title {
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  text-transform: uppercase;
+}
+
+.end { 
+  height: 10vh;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.end--score {
+  display: inline-block;
+  margin-right: 50px; 
+}
+
+.end--lives {
+  display: inline-block;
+}
+
+.instructions {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  margin-top: 15px;
+  padding: 15px 30px;
+}
+
+.instructions--play {
+  background-color: black;
+  border-radius: 10px;
+}
+
+.instructions--stop {
+  background-color: grey;
+  border-radius: 10px;
+}

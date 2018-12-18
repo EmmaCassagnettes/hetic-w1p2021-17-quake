@@ -1,0 +1,25 @@
+.home {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: monospace;
+}
+
+.home__title {
+  font-size: 32px;
+}
+
+.home__instruction {
+  border: 2px;
+  background: red;
+}
+
+.home__creators {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  background: green;
+}

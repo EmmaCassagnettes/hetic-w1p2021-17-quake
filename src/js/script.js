@@ -114,3 +114,28 @@ function deplacementAleatoir() {
         }
     }
 }
+
+function setLinks() {
+    document
+      .querySelectorAll("li")
+      .forEach(function(li) {
+        li.addEventListener("click", function() {
+          oxo.screens.loadScreen(this.innerHTML, function() {
+            setLinks()
+          })
+        })
+      })
+  }
+  
+  oxo.screens.loadScreen('home', function() {
+    setLinks()
+  });
+  
+  Dans chaque page html :
+  
+  <ul>
+      <li>home</li>
+      <li>end</li>
+      <li>win</li>
+      <li>game</li>
+    </ul>

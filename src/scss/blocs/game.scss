@@ -4,13 +4,44 @@
   url(../asset/img/grass.png);
   width: 100%;
   height: 100%;
-  
+  position: relative;
+}
+
+.sprite{
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top:0;
+  left: 0;
+  background-size: contain;
+  z-index: 100;
 }
 
 .hero {
-  width: 40px;
-  height: 40px;
-  position: absolute;
+  @extend .sprite;//rajoute toutes les carégories de .sprite (à modifier en mixin ?...)
+  background-image: url('../asset/img/persoWalkB.png');
+}
+
+.badboy {
+  @extend .sprite;
+  background-image: url('../asset/img/badguy.png');
+}
+
+.bullet{
+  @extend .sprite;
+  width: 10px;
+  height: 10px;
+}
+
+.fireball{
+  @extend .bullet;
+  background-color: red;
+}
+
+
+.waterball{
+  @extend .bullet;
+  background-color: blue;
 }
 
 .tree {
@@ -22,12 +53,7 @@
   left: 20vw;
 }
 
-.badboy {
-  width: 60px;
-  height: 60px;
-  position: absolute;
-  right: 50vw;
-}
+
 
 .lives {
   display: flex;
@@ -42,4 +68,15 @@
             width: 30px;
             position: absolute;
             background-color: black;
+}
+
+.tile {
+  background-color: lightgreen;
+  position: absolute;
+  z-index: 10;
+  border-radius: 20%;
+}
+
+.tile--burned {
+  background-color: black;
 }

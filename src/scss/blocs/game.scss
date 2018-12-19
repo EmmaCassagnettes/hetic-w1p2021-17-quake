@@ -26,12 +26,35 @@
 
 .hero {
   @extend .sprite;//rajoute toutes les carégories de .sprite (à modifier en mixin ?...)
-  background-image: url('../asset/img/persoWalkB.png');
+  background-image: url('../asset/img/persoWalkA.png');
+  animation: hero-move 1s infinite;
+}
+
+@keyframes hero-move {
+  25% {
+    background-image: url('../asset/img/persoWalkB.png');
+  }
+  50% {
+    background-image: url('../asset/img/persoWalkC.png');
+  }
+  75% {
+    background-image: url('../asset/img/persoWalkD.png');
+  }
 }
 
 .badboy {
   @extend .sprite;
   background-image: url('../asset/img/badguy.png');
+  animation: bad-move 1s infinite;
+}
+
+@keyframes bad-move {
+  33% {
+    background-image: url('../asset/img/badWalkB.png');
+  }
+  66% {
+    background-image: url('../asset/img/badWalkC.png');
+  }
 }
 
 .bullet{

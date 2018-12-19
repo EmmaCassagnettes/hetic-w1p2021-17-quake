@@ -1,4 +1,4 @@
-.end { /* modified */
+.container { /* modified */
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -18,14 +18,33 @@
   align-items: center;
   font-size: 50px;
   text-transform: uppercase;
+  margin-bottom: 60px;
+}
+
+.badGWalkRight {
+  width: 14vw;
+  height: 22vh;
+  position: absolute;
+  top: 140px;
+  right: 150px;
+}
+
+.badWalkLeft {
+  width: 5.5vw;
+  height: 12vh;
+  position: absolute;
+  top: 175px;
+  left: 200px;
 }
 
 .end { 
   height: 10vh;
+  color: white;
   text-align: center;
   margin: 0 auto;
   font-size: 30px;
   text-transform: uppercase;
+  align-items: baseline;
 }
 
 .end--score {
@@ -43,7 +62,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 40px;
+  font-size: 20px;
   margin-top: 15px;
   padding: 15px 30px;
 }

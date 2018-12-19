@@ -1,5 +1,14 @@
-main {
-  font-family: "m50";
+.end { /* modified */
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "GROBOLD"; /* modified */
+  background-image:url(../asset/img/illustration.png);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .lose__title {
   height: 30vh;
@@ -40,11 +49,11 @@ main {
 }
 
 .instructions--play {
-  background-color: black;
+  border: 3px solid white; /* modified */
   border-radius: 10px;
 }
 
 .instructions--stop {
-  background-color: grey;
+  border: 3px solid white; /* modified */
   border-radius: 10px;
 }

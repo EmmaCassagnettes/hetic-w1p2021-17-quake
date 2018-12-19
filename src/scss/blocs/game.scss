@@ -1,10 +1,17 @@
 .contain {
-  background-image:url(../asset/img/fougeres.png),
-  url(../asset/img/trees.png),
-  url(../asset/img/grass.png);
-  width: 100%;
-  height: 100%;
+  background:url(../asset/img/trees.png),
+  url(../asset/img/fougeres.png);
+  width: 100vw;
+  height: 100vh;
   position: relative;
+}
+
+.map {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: -5;
+  background-color: darkolivegreen;
 }
 
 .sprite{
@@ -53,8 +60,6 @@
   left: 20vw;
 }
 
-
-
 .lives {
   display: flex;
   justify-content: center ;
@@ -63,20 +68,40 @@
   color: red;
 }
 
-.walker {
-  height: 30px;
-            width: 30px;
-            position: absolute;
-            background-color: black;
-}
-
 .tile {
-  background-color: lightgreen;
+  background-image: url(../asset/img/grass.png);
   position: absolute;
   z-index: 10;
-  border-radius: 20%;
 }
 
 .tile--burned {
+  background-image: url(../asset/img/burned-tile.png);
+}
+
+.menuBtn {
+  color: white;
+  font-size: 10px;
+  padding: 7px 15px;
   background-color: black;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-family: "m50";
+}
+
+.endBtn { /*A SUPPRIMER*/
+  color: white;
+  font-size: 10px;
+  padding: 7px 15px;
+  background-color: black;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  font-family: "m50";
 }

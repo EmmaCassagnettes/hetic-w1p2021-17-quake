@@ -8,7 +8,7 @@ let lives; //TODO a refaire (interface)
 //-----OBJECTS-----//
 
 //Classe TileMap
-//TODO statistiques pour que la partie perde si toute la map est cramée (créer une méthode -> burned-tile / total des tiles)
+//TODO JASON statistiques pour que la partie perde si toute la map est cramée (créer une méthode -> burned-tile / total des tiles)
 class TileMap {
     constructor() {
         this.grid = new Array(); //create an array (of arrays) to interact with
@@ -24,7 +24,7 @@ class TileMap {
                         top: col * 40 + 'px',
                         left: row * 40 + 'px'
                     },
-                    appendTo: '.contain'
+                    appendTo: '.map'
                 });
                 line.push(tile);
             }
@@ -82,7 +82,7 @@ class Hero{
             //previens le comportement de base du click (selection etc... sécurité)
             event.preventDefault();
             //TODO Attention la position correspond au coin gauche superieur et non au centre du sprite (/!\ petit bug)
-            let oxo_position = oxo.animation.getPosition(this.oxoElement);// calculs à rajouter pour centrer
+            let oxo_position = oxo.animation.getPosition(this.oxoElement);// TODO calculs à rajouter pour centrer
 
             //choisir en cas de diagonale
             let distanceX = Math.abs(oxo_position.x - event.clientX);//event.clientX retourne la position de la souris sur l'axe X (pareil pour Y)
@@ -170,7 +170,7 @@ class BadBoy{
         new Bullet(oxo_position.x,oxo_position.y,dir,true);
     }
 
-    //TODO: A relier au collision avec les balles
+    //TODO: Jason A relier au collision avec les balles
     death(){
         clearInterval(this.moveInterval); //il ne faut pas oublier de clear tous les interval quand on détruit un objet !! (ex. pour les bonus)
         clearInterval(this.changeDirectionInterval);
@@ -251,6 +251,19 @@ function startGame() {
 
     lives = document.querySelector('.lives');
     displayLife(hero.lives);
+
+    document.querySelector(".menuBtn").addEventListener("click", function() {
+        oxo.screens.loadScreen('home', function() {
+            setLinks()
+        })
+    })
+
+    //TEMPORAIRE -> A SUPPRIMER
+    document.querySelector(".endBtn").addEventListener("click", function() {
+        oxo.screens.loadScreen('end', function() {
+            setLinks()
+        })
+    })
 };
 
 //fonction nombre de vie
@@ -263,7 +276,7 @@ function displayLife(lifeNumber) {
 
 
 function setLinks() {//TODO modifier les links et virer la div 'ul' (utiliser les boutons etc.)
-document
+/*document
     .querySelectorAll("li")
     .forEach(function(li) {
     li.addEventListener("click", function() {
@@ -271,7 +284,14 @@ document
         setLinks()
         })
     })
+    })*/
+    
+    document.querySelector(".home__instruction").addEventListener("click", function() {
+        oxo.screens.loadScreen('game', function() {
+            setLinks()
+        })
     })
+
 }
 
 oxo.screens.loadScreen('home', function() {

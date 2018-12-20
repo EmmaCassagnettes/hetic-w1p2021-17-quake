@@ -3,7 +3,8 @@ import { create } from "domain";
 //Var main elements
 let tilemap;
 let hero;
-let lives; //TODO a refaire (interface)
+let livesEl;
+
 
 //-----OBJECTS-----//
 
@@ -30,6 +31,8 @@ class TileMap {
             }
             this.grid.push(line);
         }
+
+
     }
 
     // méthode pour pouvoir accéder à une tile (après être passé par burnTile ou resetTile)
@@ -45,7 +48,7 @@ class TileMap {
             return line[valy];
         }
     }
-
+    //tile--burned
     burnTile(x, y) {
         let tile = this.getTile(x, y);
 
@@ -55,10 +58,9 @@ class TileMap {
             }
         }
     }
-
+    //reset tile--burned
     resetTile(x, y) {
         let tile = this.getTile(x, y);
-
         if(tile){
             tile.classList.remove("tile--burned");
         }
@@ -105,17 +107,12 @@ class Hero{
         });
     }
 
-
+    //à utliser pour les collisions
     takeDamage(amount){//TODO fonction non encore utilisée -> à rajouter avec les collisions du feu etc.
         this.lives -= amount;
         if (this.lives <= 0) {
             this.death();
         }
-    }
-
-    death(){//idem
-        console.log("Game Over");
-        oxo.screens.loadScreen('end', end);
     }
 }
 
@@ -141,13 +138,26 @@ class BadBoy{
         this.direction = "none";
         this.changeDirection();
 
-        //se deplace toute les 50ms
-        this.moveInterval = setInterval( () =>{ this.move() },50);
+        //se deplace toute les 100ms
+        this.moveInterval = setInterval( () =>{ this.move() },100);
 
-        //change de direction toute les 2000ms
+        //change de direction toute les 4000ms
         this.changeDirectionInterval = setInterval( () => { this.changeDirection() },2000);
 
-        this.shootInterval = setInterval(()=>{ this.shoot() },2000);
+        this.shootInterval = setInterval(()=>{ this.shoot() },4000);
+
+        //Perd une vie par collision avec un badboy
+        oxo.elements.onCollisionWithElement(hero.oxoElement, this.oxoElement, function() {
+            displayLife(--hero.lives);
+            if (hero.lives === 0){
+                oxo.screens.loadScreen('end', death);
+            }
+
+        });
+        //Tue badboy par collision  avec une bullet blue TODO
+        oxo.elements.onCollisionWithElement(Bullet.oxoElement.class, this.oxoElement, function() {
+            console.log('Tes fort DD');
+        });
     }
 
     //Move the enemy
@@ -170,14 +180,7 @@ class BadBoy{
         new Bullet(oxo_position.x,oxo_position.y,dir,true);
     }
 
-    //TODO: Jason A relier au collision avec les balles
-    death(){
-        clearInterval(this.moveInterval); //il ne faut pas oublier de clear tous les interval quand on détruit un objet !! (ex. pour les bonus)
-        clearInterval(this.changeDirectionInterval);
-        clearInterval(this.shootInterval);
-        this.oxoElement.remove();//supprimer du HTML
-        destroyObj(this);//set this à null (cf fin du code)
-    }
+
 }
 
 // Balle d'eau ou de feu
@@ -200,11 +203,21 @@ class Bullet{
         
         this.direction = direction;
         this.isFire = isFire;
+        //let waterball = document.querySelectorAll('.waterball');
+
+
+
 
         // distance parcourue
         this.traveldistance = 0;
 
-        this.moveInterval = setInterval(()=>{this.move()},50);//50ms
+        this.moveInterval = setInterval(()=>{this.move()},50,true);//50ms
+
+        oxo.elements.onLeaveScreenOnce(this.oxoElement, function() {
+            console.log("sorti d'écran")
+            //remove!!TODO
+        })
+
     }
 
     move(){// "déplacement" de la balle
@@ -247,9 +260,7 @@ function startGame() {
 
     setInterval(function(){new BadBoy()},5000);//un badboy sauvage apparaît toutes les 5sec
 
-
-
-    lives = document.querySelector('.lives');
+    livesEl = document.querySelector('.lives');
     displayLife(hero.lives);
 
     document.querySelector(".menuBtn").addEventListener("click", function() {
@@ -268,9 +279,9 @@ function startGame() {
 
 //fonction nombre de vie
 function displayLife(lifeNumber) {
-    lives.innerHTML = '';
+    livesEl.innerHTML = '';
     for (var i = 0; i < lifeNumber; i++){
-        lives.innerHTML += "<3"//TODO à modifier (sprites)
+        livesEl.innerHTML += "<3"//TODO à modifier (sprites)
     }
 }
 
@@ -294,12 +305,47 @@ function setLinks() {//TODO modifier les links et virer la div 'ul' (utiliser le
 
 }
 
-oxo.screens.loadScreen('home', function() {
+/*oxo.screens.loadScreen('home', function() {
     setLinks()
 });
+*/
+
+//TODO: Jason il y a surement des truc a remonter maggle
+    function death (){
+        console.log("Game Over");
+        oxo.screens.loadScreen('end', end);
+        clearInterval(this.moveInterval); //il ne faut pas oublier de clear tous les interval quand on détruit un objet !! (ex. pour les bonus)
+        clearInterval(this.changeDirectionInterval);
+        clearInterval(this.shootInterval);
+        this.oxoElement.remove();//supprimer du HTML
+        destroyObj(this);//set this à null (cf fin du code)
+    }
 
 
 //SET objects to null
 function destroyObj(obj){
     obj = null;
 }
+
+//diviseur pour %tile--burned
+var countTiliBurned = 0;
+
+setInterval(function(){
+    countTiliBurned = document.querySelectorAll('.tile--burned').length;
+    console.log(countTiliBurned)
+    if(countTiliBurned > 138){
+        console.log('end game');
+        death();
+    }
+},5000);
+
+// Music homepage
+
+/* $("#element_lecture").click(function() {
+    player = document.getElementById('musicHome');
+    player.play();
+});
+*/
+element_lecture.onclick=function(){
+    musicHome.play();
+};

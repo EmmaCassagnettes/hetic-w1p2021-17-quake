@@ -44,7 +44,7 @@
 
 .badboy {
   @extend .sprite;
-  background-image: url('../asset/img/badguy.png');
+  background-image: url('../asset/img/badWalkA.png');
   animation: bad-move 1s infinite;
 }
 
@@ -61,6 +61,8 @@
   @extend .sprite;
   width: 10px;
   height: 10px;
+  top: 33px;
+  left: 25px;
 }
 
 .fireball{

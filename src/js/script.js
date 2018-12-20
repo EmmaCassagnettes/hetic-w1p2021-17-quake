@@ -59,8 +59,9 @@ class TileMap {
   //reset tile
   resetTile(x, y) {
     let tile = this.getTile(x, y);
-    if (tile) {
+    if (tile && tile.classList.contains("tile--burned")) {
       tile.classList.remove("tile--burned");
+      oxo.player.addToScore(100);
     }
   }
 }
@@ -68,11 +69,11 @@ class TileMap {
 //HERO CLASS//
 class Hero {
   constructor() {
-    this.lives = 3;
+    this.lives = 5;
     this.oxoElement = oxo.elements.createElement({
       type: "div",
       class: "hero",
-      appendTo: ".contain"
+      appendTo: ".map"
     });
 
     oxo.animation.moveElementWithArrowKeys(this.oxoElement, 20);
@@ -120,11 +121,10 @@ class BadBoy {
           oxo.utils.getRandomNumber(0, window.innerHeight) +
           "px)"
       },
-      appendTo: ".contain"
+      appendTo: ".map"
     });
 
     badboys.push(this);
-    console.log(badboys);
 
     //Movement//
 
@@ -161,7 +161,8 @@ class BadBoy {
 
   //Move the enemy
   move() {
-    if (this.direction != "none") { //security
+    if (this.direction != "none") {
+      //security
       oxo.animation.move(this.oxoElement, this.direction, 5); // Move 5px
     }
   }
@@ -190,7 +191,7 @@ class Bullet {
       styles: {
         transform: "translate(" + posx + "px, " + posy + "px)"
       },
-      appendTo: ".contain"
+      appendTo: ".map"
     });
 
     this.direction = direction;
@@ -216,8 +217,7 @@ class Bullet {
           this.oxoElement,
           badboy.oxoElement,
           function() {
-            oxo.player.addToScore(100);
-            console.log("Game Over");
+            oxo.player.addToScore(150);
             badboy.oxoElement.remove();
             clearInterval(badboy.moveInterval); //do not forget to clear all intervals when destroying an object
             clearInterval(badboy.changeDirectionInterval);
@@ -232,7 +232,13 @@ class Bullet {
     // Prevent infinite travel distance
     this.traveldistance = 0;
 
-    this.moveInterval = setInterval(() => {this.move();}, 50, true); //50ms
+    this.moveInterval = setInterval(
+      () => {
+        this.move();
+      },
+      50,
+      true
+    ); //50ms
   }
 
   move() {
@@ -242,10 +248,12 @@ class Bullet {
 
     let oxo_position = oxo.animation.getPosition(this.oxoElement);
 
-    if (this.isFire) tilemap.burnTile(oxo_position.x, oxo_position.y);//interaction with the map
+    if (this.isFire) tilemap.burnTile(oxo_position.x, oxo_position.y);
+    //interaction with the map
     else tilemap.resetTile(oxo_position.x, oxo_position.y);
 
-    if (this.traveldistance > 500) { //max distance is 500 px
+    if (this.traveldistance > 500) {
+      //max distance is 500 px
       this.killBullet();
     }
   }
@@ -274,23 +282,18 @@ function startGame() {
 
   setInterval(function() {
     new BadBoy();
-  }, 5000); //a wild badboy appears every 5s
+  }, 3000); //a wild badboy appears every 3s
 
   livesEl = document.querySelector(".lives");
   displayLife(hero.lives);
 
   //go back to menu
-  document.querySelector(".menuBtn").addEventListener("click", function() {
-    oxo.screens.loadScreen("home", function() {
-      setLinks();
+  document
+    .querySelector(".info--menuBtn")
+    .addEventListener("click", function() {
+      oxo.screens.loadScreen("home", function() {
+      });
     });
-  });
-
-  document.querySelector(".endBtn").addEventListener("click", function() {// A SUPPRIMER
-    oxo.screens.loadScreen("end", function() {
-      setLinks();
-    });
-  });
 }
 
 //life counter
@@ -302,7 +305,11 @@ function displayLife(lifeNumber) {
 }
 
 function setLinks() {
-
+  
+  document.querySelector(".returnBtn").addEventListener("click", function() {
+    oxo.screens.loadScreen("home", function() {
+    });
+  });
 }
 
 //lose when the map is burned
@@ -310,15 +317,14 @@ var countTiliBurned = 0;
 
 setInterval(function() {
   countTiliBurned = document.querySelectorAll(".tile--burned").length;
-  console.log(countTiliBurned);
-  if (countTiliBurned > 138) {//20% of the map
+  if (countTiliBurned > 138) {
+    //20% of the map
     death();
   }
 }, 5000);
 
 function death() {
-  oxo.screens.loadScreen("end", function() {
-  });
+  oxo.screens.loadScreen("end", setLinks);
   oxo.player.getScore();
   clearInterval(BadBoy.moveInterval);
   clearInterval(BadBoy.changeDirectionInterval);
@@ -328,9 +334,9 @@ function death() {
 }
 
 // Music homepage
-document.getElementById('element_lecture').onclick = function() {
-  document.getElementById('musicHome').setAttribute('autoplay', 'true');
-}
+document.getElementById("element_lecture").onclick = function() {
+  document.getElementById("musicHome").setAttribute("autoplay", "true");
+};
 
 //SET objects to null
 function destroyObj(obj) {

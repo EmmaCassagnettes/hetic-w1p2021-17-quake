@@ -1,101 +1,114 @@
 .contain {
-  background:url(../asset/img/trees.png),
-  url(../asset/img/fougeres.png);
+  background: url(../asset/img/trees.png), url(../asset/img/fougeres.png);
   width: 100vw;
   height: 100vh;
   position: relative;
 }
 
+.info {
+  width: auto;
+  color: white;
+  font-size: 15px;
+  padding: 7px 15px;
+  background-color: rgb(12, 12, 12);
+  border-radius: 10px;
+  text-align: center;
+  position: absolute;
+  width: auto;
+  bottom: 10px;
+  font-family: "GROBOLD";
+  box-shadow: 10px 10px 40px 0px #00000079;
+}
+
+.info--menuBtn {
+  cursor: pointer;
+  right: 10px;
+}
+
 .map {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: absolute;
   z-index: -5;
   background-color: darkolivegreen;
 }
 
-.sprite{
+.sprite {
   width: 60px;
   height: 60px;
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
   background-size: contain;
   z-index: 100;
 }
 
 .hero {
-  @extend .sprite;//rajoute toutes les carégories de .sprite (à modifier en mixin ?...)
-  background-image: url('../asset/img/persoWalkA.png');
-  animation: hero-move 1s infinite;
+  @extend .sprite;
+  background-image: url("../asset/img/persoWalkA.png");
+  animation: hero-move 0.5s infinite;
 }
 
 @keyframes hero-move {
   25% {
-    background-image: url('../asset/img/persoWalkB.png');
+    background-image: url("../asset/img/persoWalkB.png");
   }
   50% {
-    background-image: url('../asset/img/persoWalkC.png');
+    background-image: url("../asset/img/persoWalkC.png");
   }
   75% {
-    background-image: url('../asset/img/persoWalkD.png');
+    background-image: url("../asset/img/persoWalkD.png");
   }
 }
 
 .badboy {
   @extend .sprite;
-  background-image: url('../asset/img/badWalkA.png');
-  animation: bad-move 1s infinite;
+  background-image: url("../asset/img/badWalkA.png");
+  animation: bad-move 0.5s infinite;
 }
 
 @keyframes bad-move {
   33% {
-    background-image: url('../asset/img/badWalkB.png');
+    background-image: url("../asset/img/badWalkB.png");
   }
   66% {
-    background-image: url('../asset/img/badWalkC.png');
+    background-image: url("../asset/img/badWalkC.png");
   }
 }
 
-.bullet{
+.bullet {
   @extend .sprite;
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   top: 33px;
   left: 25px;
 }
 
-.fireball{
+.fireball {
   @extend .bullet;
-  background-color: red;
+  background-image: url(../asset/img/flame.png);
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
-
-.waterball{
+.waterball {
   @extend .bullet;
-  background-color: blue;
-}
-
-.tree {
-  width: 10px;
-  height: 80px;
-  background: green;
-  position: absolute;
-  top: 10vh;
-  left: 20vw;
+  background-image: url(../asset/img/water.png);
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .lives {
   display: flex;
   justify-content: center;
-}
 
-.heart {
-  background-image: url(../asset/img/heart.png);
-  height: 32px;
-  width: 32px;
-  background-position: center;
-  background-size: contain;
+  .heart {
+    background-image: url(../asset/img/heart.png);
+    height: 45px;
+    width: 45px;
+    background-position: center;
+    background-size: contain;
+  }
 }
 
 .tile {
@@ -105,12 +118,15 @@
 }
 
 .tile--burned {
-  background-image: url(../asset/img/burned-tile.png);
+  background-image: url(../asset/img/burned-tile-flame.png),
+    url(../asset/img/burned-tile.png);
+  background-size: cover;
+  border-radius: 20%;
 }
 
 .menuBtn {
   color: white;
-  font-size: 10px;
+  font-size: 15px;
   padding: 7px 15px;
   background-color: black;
   border-radius: 10px;
@@ -119,19 +135,6 @@
   position: absolute;
   right: 10px;
   top: 10px;
-  font-family: "m50";
-}
-
-.endBtn { /*A SUPPRIMER*/
-  color: white;
-  font-size: 10px;
-  padding: 7px 15px;
-  background-color: black;
-  border-radius: 10px;
-  text-align: center;
-  cursor: pointer;
-  position: absolute;
-  right: 10px;
-  top: 40px;
-  font-family: "m50";
+  font-family: "GROBOLD";
+  box-shadow: 10px 10px 40px 0px #00000079;
 }

@@ -1,13 +1,17 @@
-<main class="container"> <!--modified-->
-  <h1 class="lose__title">
-    <img src="../asset/img/h1_GameOver.png" alt="logo_gameOver">
-  </h1>
-  <div class="end__score" data-oxo-score></div>
-  <img class="badGWalkRight" src="../asset/img/badWalkA.png" alt="badwalk">
-  <img class="badWalkLeft" src="../asset/img/badWalkAMiroir.png" alt="badalk">
-  <div class="end">Score :</div>
-  <div class="instructions">
-    <div class="instructions instructions--play">Press enter to play again</div>
-    <div class="instructions instructions--stop">Go back to menu</div>
+<main class="container">
+  <!--modified-->
+  <div class="lose__title">
+    <img
+      class="badguyImg"
+      src="../asset/img/badWalkAMiroir.png"
+      alt="badwalk"
+    />
+    <img src="../asset/img/h1_GameOver.png" alt="logo_gameOver" />
+    <img class="badguyImg" src="../asset/img/badWalkA.png" alt="badalk" />
   </div>
+  <div class="finalScore">
+    <p>Your score : </p>
+    <div class="end__score" data-oxo-score></div>
+  </div>
+  <div class="returnBtn">Go back to menu</div>
 </main>

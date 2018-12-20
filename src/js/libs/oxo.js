@@ -234,7 +234,6 @@ window.oxo = {
         : document.body;
 
       if (!host) {
-        console.error('No element was found for selector ', +hostSelector);
         return;
       }
 

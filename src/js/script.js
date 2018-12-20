@@ -216,6 +216,7 @@ class Bullet {
           this.oxoElement,
           badboy.oxoElement,
           function() {
+            oxo.player.addToScore(100);
             console.log("Game Over");
             badboy.oxoElement.remove();
             clearInterval(badboy.moveInterval); //do not forget to clear all intervals when destroying an object
@@ -269,6 +270,7 @@ oxo.inputs.listenKey("enter", function() {
 function startGame() {
   tilemap = new TileMap();
   hero = new Hero();
+  oxo.player.setScore(0);
 
   setInterval(function() {
     new BadBoy();
@@ -317,6 +319,7 @@ setInterval(function() {
 function death() {
   oxo.screens.loadScreen("end", function() {
   });
+  oxo.player.getScore();
   clearInterval(BadBoy.moveInterval);
   clearInterval(BadBoy.changeDirectionInterval);
   clearInterval(BadBoy.shootInterval);

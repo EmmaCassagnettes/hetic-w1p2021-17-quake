@@ -12,11 +12,11 @@
 }
 
 .home__title {
-  height: 50vh;
+  margin-bottom: 100px;
 }
 
 .home__story {
-  color: #DF3939;
+  color: black;
   font-size: 20px;
   text-transform: uppercase;
   margin-left: 450px;
@@ -38,11 +38,12 @@
 .home__names {
   position: absolute;
   color: white;
-  margin-top: 80px;
-  line-height: 1.5;
-  left: 1px;
-  bottom: 1px;
-  margin-left: 10px;
+  bottom: 1px; 
+
+  li {
+    display: inline;
+    margin-right: 50px; 
+  } 
 }
 
 .logo {
@@ -66,7 +67,7 @@
   position: absolute;
   width: 3vw;
   height: 7vh;
-  right: 164px;
+  right: 103px;
   bottom: 70px;
 }
 
@@ -74,7 +75,7 @@
   position: absolute;
   width: 5vw;
   height: 6vh;
-  right: 1px;
+  right: -16px;
   bottom: 70px; 
 }
 
@@ -82,7 +83,7 @@
   position: absolute;
   width: 6vw;
   height: 6vh;
-  right: -170px;
+  right: -148px;
   bottom: 70px; 
 }
 
@@ -91,6 +92,7 @@
   position: absolute;
   flex-direction: row;
   color: black;
+  top: 322px;
 }
 
 .rules--target {
@@ -102,9 +104,13 @@
 }
 
 .game__controls {
-  display: flex;
   position: absolute;
-  flex-direction: row;
-  align-items: center;
 }
 
+.love {
+  position: absolute;
+  width: 4vw;
+  height: 6vh;
+  bottom: 1px;
+  left: 10px;
+}

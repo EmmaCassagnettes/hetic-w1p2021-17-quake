@@ -60,6 +60,32 @@
 }
 
 .mouse-cursor {
-  width: 10vw;
-  height: 10vh;
+  position: absolute;
+  width: 5vw;
+  height: 6vh;
+  right: 200px;
+  bottom: 57px; 
 }
+
+.arrows {
+  position: absolute;
+  width: 6vw;
+  height: 6vh;
+  right: 60px;
+  bottom: 50px; 
+}
+
+.rules {
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  color: white;
+  right: 64px;
+  bottom: 20px;
+
+}
+
+.rules--shoot {
+  margin-right: 60px;
+}
+

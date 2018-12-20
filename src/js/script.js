@@ -4,12 +4,13 @@ import { create } from "domain";
 let tilemap;
 let hero;
 let livesEl;
+let badboys = [];
+
 
 
 //-----OBJECTS-----//
 
 //Classe TileMap
-//TODO JASON statistiques pour que la partie perde si toute la map est cramée (créer une méthode -> burned-tile / total des tiles)
 class TileMap {
     constructor() {
         this.grid = new Array(); //create an array (of arrays) to interact with
@@ -83,8 +84,7 @@ class Hero{
 
             //previens le comportement de base du click (selection etc... sécurité)
             event.preventDefault();
-            //TODO Attention la position correspond au coin gauche superieur et non au centre du sprite (/!\ petit bug)
-            let oxo_position = oxo.animation.getPosition(this.oxoElement);// TODO calculs à rajouter pour centrer
+            let oxo_position = oxo.animation.getPosition(this.oxoElement);
 
             //choisir en cas de diagonale
             let distanceX = Math.abs(oxo_position.x - event.clientX);//event.clientX retourne la position de la souris sur l'axe X (pareil pour Y)
@@ -108,7 +108,7 @@ class Hero{
     }
 
     //à utliser pour les collisions
-    takeDamage(amount){//TODO fonction non encore utilisée -> à rajouter avec les collisions du feu etc.
+    takeDamage(amount){
         this.lives -= amount;
         if (this.lives <= 0) {
             this.death();
@@ -132,6 +132,9 @@ class BadBoy{
             appendTo: '.contain'
         });
 
+        badboys.push(this);
+        console.log(badboys);
+
         //Movement
 
         //initialise direction de depart puis randomise
@@ -153,10 +156,6 @@ class BadBoy{
                 oxo.screens.loadScreen('end', death);
             }
 
-        });
-        //Tue badboy par collision  avec une bullet blue TODO
-        oxo.elements.onCollisionWithElement(Bullet.oxoElement.class, this.oxoElement, function() {
-            console.log('Tes fort DD');
         });
     }
 
@@ -203,10 +202,31 @@ class Bullet{
         
         this.direction = direction;
         this.isFire = isFire;
-        //let waterball = document.querySelectorAll('.waterball');
 
-
-
+        //Target of the bullet
+        //Hero is touched
+        if (isFire) {
+            oxo.elements.onCollisionWithElement(this.oxoElement, hero.oxoElement, function() {
+                displayLife(--hero.lives);
+                if (hero.lives === 0){
+                    oxo.screens.loadScreen('end', death);
+                }
+            }) ;
+        //Badboy is dead
+        } else {
+            //
+            badboys.forEach(badboy => {
+                oxo.elements.onCollisionWithElement(this.oxoElement, badboy.oxoElement, function() {
+                    console.log("Game Over");
+                    badboy.oxoElement.remove();
+                    clearInterval(badboy.moveInterval); //il ne faut pas oublier de clear tous les interval quand on détruit un objet !! (ex. pour les bonus)
+                    clearInterval(badboy.changeDirectionInterval);
+                    clearInterval(badboy.shootInterval);
+                    badboy.oxoElement.remove();//supprimer du HTML
+                    destroyObj(this);//set this à null (cf fin du code)
+                }) ;
+            });
+        }
 
         // distance parcourue
         this.traveldistance = 0;
@@ -214,17 +234,15 @@ class Bullet{
         this.moveInterval = setInterval(()=>{this.move()},50,true);//50ms
 
         oxo.elements.onLeaveScreenOnce(this.oxoElement, function() {
-            console.log("sorti d'écran")
-            //remove!!TODO
-        })
-
-    }
+            console.log("sorti d'écran");
+        });
+    };
 
     move(){// "déplacement" de la balle
         this.traveldistance += 10;
         oxo.animation.move(this.oxoElement, this.direction, 10);//10px
 
-        let oxo_position = oxo.animation.getPosition(this.oxoElement);//TODO Idem prblm centrer
+        let oxo_position = oxo.animation.getPosition(this.oxoElement);
 
         if(this.isFire)
             tilemap.burnTile(oxo_position.x,oxo_position.y);
@@ -286,41 +304,23 @@ function displayLife(lifeNumber) {
 }
 
 
-function setLinks() {//TODO modifier les links et virer la div 'ul' (utiliser les boutons etc.)
-/*document
-    .querySelectorAll("li")
-    .forEach(function(li) {
-    li.addEventListener("click", function() {
-        oxo.screens.loadScreen(this.innerHTML, function() {
-        setLinks()
-        })
-    })
-    })*/
-    
+function setLinks() {
     document.querySelector(".home__instruction").addEventListener("click", function() {
         oxo.screens.loadScreen('game', function() {
             setLinks()
         })
     })
-
 }
 
-/*oxo.screens.loadScreen('home', function() {
-    setLinks()
-});
-*/
-
-//TODO: Jason il y a surement des truc a remonter maggle
-    function death (){
-        console.log("Game Over");
-        oxo.screens.loadScreen('end', end);
-        clearInterval(this.moveInterval); //il ne faut pas oublier de clear tous les interval quand on détruit un objet !! (ex. pour les bonus)
-        clearInterval(this.changeDirectionInterval);
-        clearInterval(this.shootInterval);
-        this.oxoElement.remove();//supprimer du HTML
-        destroyObj(this);//set this à null (cf fin du code)
-    }
-
+function death (){
+    console.log("Game Over");
+    oxo.screens.loadScreen('end', end);
+    clearInterval(this.moveInterval); //il ne faut pas oublier de clear tous les interval quand on détruit un objet !! (ex. pour les bonus)
+    clearInterval(this.changeDirectionInterval);
+    clearInterval(this.shootInterval);
+    this.oxoElement.remove();//supprimer du HTML
+    destroyObj(this);//set this à null (cf fin du code)
+}
 
 //SET objects to null
 function destroyObj(obj){
@@ -340,12 +340,6 @@ setInterval(function(){
 },5000);
 
 // Music homepage
-
-/* $("#element_lecture").click(function() {
-    player = document.getElementById('musicHome');
-    player.play();
-});
-*/
 element_lecture.onclick=function(){
     musicHome.play();
 };

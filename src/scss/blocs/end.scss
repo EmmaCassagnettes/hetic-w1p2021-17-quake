@@ -47,15 +47,6 @@
   align-items: baseline;
 }
 
-.end--score {
-  display: inline-block;
-  margin-right: 50px; 
-}
-
-.end--lives {
-  display: inline-block;
-}
-
 .instructions {
   color: white;
   display: flex;
@@ -68,11 +59,13 @@
 }
 
 .instructions--play {
-  border: 3px solid white; /* modified */
+  background-color: #DF3939;
+  border: 5px solid black;
   border-radius: 10px;
 }
 
 .instructions--stop {
-  border: 3px solid white; /* modified */
+  background-color: #DF3939;
+  border: 5px solid black;
   border-radius: 10px;
 }

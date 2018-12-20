@@ -87,10 +87,15 @@
 
 .lives {
   display: flex;
-  justify-content: center ;
-  font-family: monospace;
-  font-size: 32px;
-  color: red;
+  justify-content: center;
+}
+
+.heart {
+  background-image: url(../asset/img/heart.png);
+  height: 32px;
+  width: 32px;
+  background-position: center;
+  background-size: contain;
 }
 
 .tile {
